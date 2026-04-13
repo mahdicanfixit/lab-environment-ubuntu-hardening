@@ -62,65 +62,65 @@ now we have completed step 2 going to step 3 which is
 
 ## Step 3 system audit and patching
 
-we need to perform a quick "sudo apt update && sudo apt upgrade -y" to ensure that you are starting with a patched kernal and everything is secured
+we need to perform a quick ```sudo apt update && sudo apt upgrade -y``` to ensure that you are starting with a patched kernel and everything is secured
 
 <img width="1280" height="800" alt="VirtualBox_Ubuntu_12_04_2026_20_26_26" src="https://github.com/user-attachments/assets/1e3256f4-97a1-4bca-ba90-961b2e364f4d" />
 
-once that done do the next command which is "ip a" to see your local IP address since we gonna harden SSH. you will want to know where the serve lives in the virtual network
+Once that done do the next command which is ```ip a``` to see your local IP address since we gonna harden SSH. you will want to know where the server lives in the virtual network
 
 <img width="876" height="257" alt="image" src="https://github.com/user-attachments/assets/c2ba550b-c8ec-4cc4-9a34-9dffaa7dd808" />
 
-as you can see. in 2: enp0s3, we can see our IP address which is 10.0.2.15. now that we know that we have updated our server and our IP address we will go to
+As you can see. in ```2: enp0s3```, we can see our IP address which is ```10.0.2.15```. now that we know that we have updated our server and know the IP address we will go to
 
 ## Step 4 attack surface reduction
 
-what we gonna do in this step is basically reducing any attack opportunities by enabling uncomplicated firewall aka UFW.
+What we gonna do in this step is basically reducing any attack opportunities by enabling uncomplicated firewall aka UFW.
 
-linux tend to let anything talk to it so lets change that to make it only talk to the host. first lets start by typing "sudo ufw status" 
+Linux tend to let anything talk to it so lets change that to make it only talk to the host. first lets start by typing ```sudo ufw status```
 
 <img width="280" height="50" alt="image" src="https://github.com/user-attachments/assets/0c6f6b47-d25c-4d4a-a708-e9cb5d993d2e" />
 
-by default it will say status: inactive.
+By default it will say ```status: inactive```.
 
-and the plan is that we will tell the firewall to deny everything by default then we will allow only SSH so that we wont lock ourselves out, then we will enable it. 
+And the plan is that we will tell the firewall to deny everything by default then we will allow only SSH so that we wont lock ourselves out, then we will enable it. 
 
-so start by writing " sudo ufw default deny incoming" then "sudo ufw default allow outgoing". after that do "sudo ufw allow ssh" critical so that you wont lock yourself out. then enable the firewall "sudo ufw enable" and do Y when it warns you about the connection.
+So start by writing ```sudo ufw default deny incoming``` then ```sudo ufw default allow outgoing```. after that do ```sudo ufw allow ssh``` this is critical so that you wont lock yourself out. Then enable the firewall by typing ```sudo ufw enable```.
 
 <img width="497" height="423" alt="image" src="https://github.com/user-attachments/assets/512c91c8-1fd4-486d-8424-774354702541" />
 
-now that we have successfully got the firewall active. we gonna want to SSH hardening. to do so we gonna edit the SSH configuration file. by moving the SSH port 22 that is targeted to something random, example 2222.
+Now that we have successfully got the firewall active, we gonna change our SSH port. to do so we gonna edit the SSH configuration file. By changing the default SSH ```port 22``` that is targeted by attackers to something random, for example ```2222```.
 
-and we gonna disable root login so the superuser cant log in directly but i ran into an issue, we suppose to go into nano and edit the permission but it was a blank page. so i did "ls /etc/ssh/"
+And we gonna disable root automatic login so that the superuser needs to enter manually. But i ran into an issue, we suppose to go into ```nano``` and edit the permission but it was a blank page. so i did ```ls /etc/ssh/```
 
 <img width="963" height="55" alt="image" src="https://github.com/user-attachments/assets/2217b927-e8e8-4c51-8e17-5e60e55b7736" />
 
-and as you can see we cant find sshd_config because ssh_config is the VM wants to connect to other computers. But the missing one which is sshd_config is when you want to secure the VM itself. but i solved it by downloading openssh-server. so write "sudo apt install openssh-server -y" once its done you'll see the sshd_config 
+And as you can see we cant find ```sshd_config``` because ```ssh_config``` is the VM wants to connect to other computers. But the missing one which is ```sshd_config``` is when you want to secure the VM itself. but i solved it by downloading openssh-server. so write ```sudo apt install openssh-server -y``` once its done you'll see the ```sshd_config ```
 
 <img width="959" height="67" alt="image" src="https://github.com/user-attachments/assets/ef40de58-c6b0-4663-9c3a-f1c0b9e29565" />
 
-now that we solved the issue, lets run the code "sudo nano /etc/ssh/sshd_config"
+now that we solved the issue, lets run the code ```sudo nano /etc/ssh/sshd_config```
 
 <img width="963" height="800" alt="image" src="https://github.com/user-attachments/assets/6fb447db-9b77-41ae-958a-d136e91a4cfe" />
 
-great now we are in nano, what we gonna change here is port from "22" to "2222"
+great now we are in nano, what we gonna change here is port from ```22``` to ```2222```
 
 <<img width="186" height="82" alt="image" src="https://github.com/user-attachments/assets/f58cdc43-1abe-4d21-9c89-b02eb179efe2" />
 
-amd for root login look for #PermitRootLogin prohibit-password. what we need to do here is remove the # and change prohibit-password to no like this:
+And for root login look for ```PermitRootLogin prohibit-password```. What we need to do here is to delete the ```#``` and change ```prohibit-password``` to ```no``` like this:
 
 <img width="182" height="96" alt="image" src="https://github.com/user-attachments/assets/bb9c7768-4fdb-4cb8-b34e-242650c91844" />
 
-that way nobody is allowed to login as root directly. you must login as a regular user first. perfect now we can save by doing ctrl + O then enter. then exit using ctrl + X.
+that way nobody is allowed to login as root directly. you must login as a regular user first. And now we can save by doing ```ctrl + O``` then ```enter```, then exit using ```ctrl + X```.
 
-now run sudo ufw allow 2222/tcp and sudo ufw delete allow ssh
+now run ```sudo ufw allow 2222/tcp``` and sudo ```ufw delete allow ssh```
 
 <img width="365" height="119" alt="image" src="https://github.com/user-attachments/assets/088b8140-13c0-4e70-8203-8d52fc418cf1" />
 
-that way your telling the firewall about the new port. and removing the old port which was 22. and now restart SSH so that everything applys. "sudo systemctl restart ssh". once you do now check by writing "sudo ufw status verbose" 
+that way your telling the firewall about the new port. and removing the old port which was 22. and now restart SSH so that everything applys by typing ```sudo systemctl restart ssh```. and then to check type ```sudo ufw status verbose```
 
 <img width="499" height="196" alt="image" src="https://github.com/user-attachments/assets/60fc1cf8-a757-4d16-9eb7-b2bd45b0febb" />
 
-as you can see the port is 2222 and with that. we offically harden the server. making it a secure linux environment.
+As you can see the port is ```2222```. with that we offically harden the server. making it a secure linux environment.
 
 ## Verdict
-we did alot today. from setting up a virtual machine to hardening a linux server, thank you for your time and till next time.
+we did alot today. from setting up a virtual machine to hardening a linux server, thank you for your time and until next time.
