@@ -33,7 +33,7 @@ This appears because there is missing dependencies that do automation. but this 
 <img width="960" height="747" alt="image" src="https://github.com/user-attachments/assets/98403230-f333-40ce-b69e-56720c0620c9" />
 
 
-Once the installion is complete this will appear, we will click on New because we are creating a new VM. a new pop up will appear where you will fill the VM Name and ISO image. ill name my VM ubuntu and for the ISO image we will put our ubuntu verison that we installed and it should look like this:
+Once the installation is complete this will appear, we will click on New because we are creating a new VM. a new pop up will appear where you will fill the VM Name and ISO image. ill name my VM ubuntu and for the ISO image we will put our ubuntu verison that we installed and it should look like this:
 
 
 <img width="820" height="410" alt="image" src="https://github.com/user-attachments/assets/507e3b50-c820-4fa0-a5c6-d158c11fbfff" />
@@ -66,7 +66,7 @@ We need to perform a quick ```sudo apt update && sudo apt upgrade -y``` to ensur
 
 <img width="1280" height="800" alt="VirtualBox_Ubuntu_12_04_2026_20_26_26" src="https://github.com/user-attachments/assets/1e3256f4-97a1-4bca-ba90-961b2e364f4d" />
 
-Once that done do the next command which is ```ip a``` to see your local IP address since we gonna harden SSH. you will want to know where the server lives in the virtual network
+Once that done do the next command which is ```ip a``` to see your local IP address since we are going to harden SSH. you will want to know where the server lives in the virtual network
 
 <img width="876" height="257" alt="image" src="https://github.com/user-attachments/assets/c2ba550b-c8ec-4cc4-9a34-9dffaa7dd808" />
 
@@ -74,7 +74,7 @@ As you can see. in ```2: enp0s3```, we can see our IP address which is ```10.0.2
 
 ## Step 4 attack surface reduction
 
-What we gonna do in this step is basically reducing any attack opportunities by enabling uncomplicated firewall aka UFW.
+What we are going to do in this step is basically reducing any attack opportunities by enabling uncomplicated firewall aka UFW.
 
 Linux tend to let anything talk to it so lets change that to make it only talk to the host. first lets start by typing ```sudo ufw status```
 
@@ -82,7 +82,7 @@ Linux tend to let anything talk to it so lets change that to make it only talk t
 
 By default it will say ```status: inactive```.
 
-And the plan is that we will tell the firewall to deny everything by default then we will allow only SSH so that we wont lock ourselves out, then we will enable it. 
+And the plan is that we will tell the firewall to deny everything by default, then allow only SSH. So that we wont lock ourselves out, then we will enable it. 
 
 So start by writing ```sudo ufw default deny incoming``` then ```sudo ufw default allow outgoing```. after that do ```sudo ufw allow ssh``` this is critical so that you wont lock yourself out. Then enable the firewall by typing ```sudo ufw enable```.
 
@@ -116,7 +116,7 @@ Now run ```sudo ufw allow 2222/tcp``` and sudo ```ufw delete allow ssh```
 
 <img width="365" height="119" alt="image" src="https://github.com/user-attachments/assets/088b8140-13c0-4e70-8203-8d52fc418cf1" />
 
-That way your telling the firewall about the new port. and removing the old port which was 22. and now restart SSH so that everything applys by typing ```sudo systemctl restart ssh```. and then to check type ```sudo ufw status verbose```
+That way your telling the firewall about the new port. and removing the old port which was 22. and now restart SSH so that everything applies. By typing ```sudo systemctl restart ssh```. and then to check type ```sudo ufw status verbose```
 
 <img width="499" height="196" alt="image" src="https://github.com/user-attachments/assets/60fc1cf8-a757-4d16-9eb7-b2bd45b0febb" />
 
