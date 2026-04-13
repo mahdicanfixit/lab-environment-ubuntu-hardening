@@ -22,25 +22,25 @@ Network Reset Warning: You will receive a notification regarding a temporary net
 
 <img width="495" height="387" alt="image" src="https://github.com/user-attachments/assets/9b7dbce6-8582-4dab-b35c-b954b8c78155" />
 
-hit yes. then if this appears
+Hit yes. then if this appears
 
 <img width="491" height="388" alt="image" src="https://github.com/user-attachments/assets/2e4f1186-7580-4758-82d5-d85ff660c63c" />
 
-this appears because there is missing dependencies that do automation. but this project focus is on OS hardening so we click yes to keep the environment lightweight. can be later solved if we want python automation.
+This appears because there is missing dependencies that do automation. but this project focus is on OS hardening so we click yes to keep the environment lightweight. can be later solved if we want python automation.
 
 ## Step 2 setting up the VM
 
 <img width="960" height="747" alt="image" src="https://github.com/user-attachments/assets/98403230-f333-40ce-b69e-56720c0620c9" />
 
 
-once the installion is complete this will appear, we will click on New because we are creating a new VM. a new pop up will appear where you will fill the VM Name and ISO image. ill name my VM ubuntu and for the ISO image we will put our ubuntu verison that we installed and it should look like this:
+Once the installion is complete this will appear, we will click on New because we are creating a new VM. a new pop up will appear where you will fill the VM Name and ISO image. ill name my VM ubuntu and for the ISO image we will put our ubuntu verison that we installed and it should look like this:
 
 
 <img width="820" height="410" alt="image" src="https://github.com/user-attachments/assets/507e3b50-c820-4fa0-a5c6-d158c11fbfff" />
 
-click Next. and youll see that you can change your Username and password, as well as OS installation Options. for password make sure you have a proper 8-12 character with at least one number and captial to increase resistance against brute force attacks, once you enter ur password click next.
+Click Next. and youll see that you can change your Username and password, as well as OS installation Options. for password make sure you have a proper 8-12 character with at least one number and captial to increase resistance against brute force attacks, once you enter ur password click next.
 
-in this section, we will need to give the VM the needed virtual hardware to work. now this part is depending on the host hardware, since my PC is quite capable ill put the sweet spot
+In this section, we will need to give the VM the needed virtual hardware to work. now this part is depending on the host hardware, since my PC is quite capable ill put the sweet spot
 
 <img width="820" height="409" alt="image" src="https://github.com/user-attachments/assets/4b255371-289e-4cb0-8c5b-b5d4abe7345d" />
 
@@ -50,19 +50,19 @@ Once your done click next. and click Finish, and then a new window will appear o
 
 <img width="1919" height="1033" alt="image" src="https://github.com/user-attachments/assets/c1c34e3d-43e3-4445-93a8-6217393aba4d" />
 
-Once its done, and you see a yellow test click Enter, and "Ubuntu login" will appear.
+Once its done, and you see a yellow test click Enter, and ```Ubuntu login``` will appear.
 
 <img width="1280" height="800" alt="VirtualBox_Ubuntu_12_04_2026_20_05_11" src="https://github.com/user-attachments/assets/54730f2a-7c45-4963-bd9a-a2d1c0c1fb4a" />
 
-that means the VM have sucessfully installed and wants the username and password login so we will enter it:
+That means the VM have sucessfully installed and wants the username and password login so we will enter it:
 
 <img width="1280" height="800" alt="VirtualBox_Ubuntu_12_04_2026_20_12_33" src="https://github.com/user-attachments/assets/7075d457-e31e-4c41-9428-aa97c69121ea" />
 
-now we have completed step 2 going to step 3 which is
+Now we have completed step 2 going to step 3 which is
 
 ## Step 3 system audit and patching
 
-we need to perform a quick ```sudo apt update && sudo apt upgrade -y``` to ensure that you are starting with a patched kernel and everything is secured
+We need to perform a quick ```sudo apt update && sudo apt upgrade -y``` to ensure that you are starting with a patched kernel and everything is secured
 
 <img width="1280" height="800" alt="VirtualBox_Ubuntu_12_04_2026_20_26_26" src="https://github.com/user-attachments/assets/1e3256f4-97a1-4bca-ba90-961b2e364f4d" />
 
@@ -98,11 +98,11 @@ And as you can see we cant find ```sshd_config``` because ```ssh_config``` is th
 
 <img width="959" height="67" alt="image" src="https://github.com/user-attachments/assets/ef40de58-c6b0-4663-9c3a-f1c0b9e29565" />
 
-now that we solved the issue, lets run the code ```sudo nano /etc/ssh/sshd_config```
+Now that we solved the issue, lets run the code ```sudo nano /etc/ssh/sshd_config```
 
 <img width="963" height="800" alt="image" src="https://github.com/user-attachments/assets/6fb447db-9b77-41ae-958a-d136e91a4cfe" />
 
-great now we are in nano, what we gonna change here is port from ```22``` to ```2222```
+Great now we are in nano, what we gonna change here is port from ```22``` to ```2222```
 
 <<img width="186" height="82" alt="image" src="https://github.com/user-attachments/assets/f58cdc43-1abe-4d21-9c89-b02eb179efe2" />
 
@@ -110,17 +110,17 @@ And for root login look for ```PermitRootLogin prohibit-password```. What we nee
 
 <img width="182" height="96" alt="image" src="https://github.com/user-attachments/assets/bb9c7768-4fdb-4cb8-b34e-242650c91844" />
 
-that way nobody is allowed to login as root directly. you must login as a regular user first. And now we can save by doing ```ctrl + O``` then ```enter```, then exit using ```ctrl + X```.
+That way nobody is allowed to login as root directly. you must login as a regular user first. And now we can save by doing ```ctrl + O``` then ```enter```, then exit using ```ctrl + X```.
 
-now run ```sudo ufw allow 2222/tcp``` and sudo ```ufw delete allow ssh```
+Now run ```sudo ufw allow 2222/tcp``` and sudo ```ufw delete allow ssh```
 
 <img width="365" height="119" alt="image" src="https://github.com/user-attachments/assets/088b8140-13c0-4e70-8203-8d52fc418cf1" />
 
-that way your telling the firewall about the new port. and removing the old port which was 22. and now restart SSH so that everything applys by typing ```sudo systemctl restart ssh```. and then to check type ```sudo ufw status verbose```
+That way your telling the firewall about the new port. and removing the old port which was 22. and now restart SSH so that everything applys by typing ```sudo systemctl restart ssh```. and then to check type ```sudo ufw status verbose```
 
 <img width="499" height="196" alt="image" src="https://github.com/user-attachments/assets/60fc1cf8-a757-4d16-9eb7-b2bd45b0febb" />
 
 As you can see the port is ```2222```. with that we offically harden the server. making it a secure linux environment.
 
 ## Verdict
-we did alot today. from setting up a virtual machine to hardening a linux server, thank you for your time and until next time.
+We did alot today. from setting up a virtual machine to hardening a linux server, thank you for your time and until next time.
