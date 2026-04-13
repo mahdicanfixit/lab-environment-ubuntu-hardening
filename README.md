@@ -14,6 +14,9 @@ For context, these are the hardware specs of the host machine running the virtua
 * **Storage:** 1tb m.2
 * **OS:** Windows 11 (Host)
 
+## Project walkthrough:
+Made a quick youtube demo of the process step by step: https://www.youtube.com/watch?v=lXkfci6QbuI
+
 ## Step 1 installing the VM
 Network Reset Warning: You will receive a notification regarding a temporary network disconnection. This is normal; VirtualBox is installing the Virtual Network Interface, which allows for network bridging and NAT translation.
 
