@@ -1,12 +1,12 @@
-# lab-environment-ubuntu-hardening
+# 🔒 lab-environment-ubuntu-hardening
 A hands on Linux lab environment focused on system administration, network configuration, and OS hardening for security testing.
 ---
 The objective of the project is to build a secure linux environment from the ground up via using a virtual machine. Instead of just a standard out of the box install, I focused on system hardening and attack surface reduction to simulate a ready server environment.
 
-### What i used for this project
+### 🛠️ What i used for this project
 for the virtual machine we used **[VirtualBox 7.2](https://download.virtualbox.org/virtualbox/7.2.6/VirtualBox-7.2.6a-172322-Win.exe)**, and the linux distro im using is **[Ubuntu 24.04](https://ubuntu.com/download/server#manual-install-tab)**
 
-### Host System Specifications
+### 💻 Host System Specifications
 For context, these are the hardware specs of the host machine running the virtual machine:
 
 * **CPU:** Ryzen 5 5500
@@ -14,10 +14,10 @@ For context, these are the hardware specs of the host machine running the virtua
 * **Storage:** 1tb m.2
 * **OS:** Windows 11 (Host)
 
-## Project walkthrough:
+## 📺 Project walkthrough:
 Made a quick youtube demo of the process step by step: https://www.youtube.com/watch?v=lXkfci6QbuI
 
-## Step 1 installing the VM
+## 🏗️ Step 1 installing the VM
 Network Reset Warning: You will receive a notification regarding a temporary network disconnection. This is normal; VirtualBox is installing the Virtual Network Interface, which allows for network bridging and NAT translation.
 
 <img width="495" height="387" alt="image" src="https://github.com/user-attachments/assets/9b7dbce6-8582-4dab-b35c-b954b8c78155" />
@@ -28,7 +28,7 @@ Hit yes. then if this appears
 
 This appears because there is missing dependencies that do automation. but this project focus is on OS hardening so we click yes to keep the environment lightweight. can be later solved if we want python automation.
 
-## Step 2 setting up the VM
+##⚙️ Step 2 setting up the VM
 
 <img width="960" height="747" alt="image" src="https://github.com/user-attachments/assets/98403230-f333-40ce-b69e-56720c0620c9" />
 
@@ -60,7 +60,7 @@ That means the VM have sucessfully installed and wants the username and password
 
 Now we have completed step 2 going to step 3 which is
 
-## Step 3 system audit and patching
+## 🛡️ Step 3 system audit and patching
 
 We need to perform a quick ```sudo apt update && sudo apt upgrade -y``` to ensure that you are starting with a patched kernel and everything is secured
 
@@ -72,7 +72,7 @@ Once that done do the next command which is ```ip a``` to see your local IP addr
 
 As you can see. in ```2: enp0s3```, we can see our IP address which is ```10.0.2.15```. now that we know that we have updated our server and know the IP address we will go to
 
-## Step 4 attack surface reduction
+## 🧱 Step 4 attack surface reduction
 
 What we are going to do in this step is basically reducing any attack opportunities by enabling uncomplicated firewall aka UFW.
 
@@ -122,5 +122,5 @@ That way your telling the firewall about the new port. and removing the old port
 
 As you can see the port is ```2222```. with that we offically harden the server. making it a secure linux environment.
 
-## Verdict
+## 🏁 Verdict
 We did alot today. from setting up a virtual machine to hardening a linux server, thank you for your time and until next time.
